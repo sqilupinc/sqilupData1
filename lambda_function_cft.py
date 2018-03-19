@@ -16,7 +16,6 @@ def lambda_handler(event, context):
     cft_filename = dict_evnt[0]['s3']['object']['key']
     s3_region_name = dict_evnt[0]['awsRegion']
     tempurl = 'https://s3.'+s3_region_name+'.amazonaws.com/'+bucketname+'/'+cft_filename
-    tempurl = 'https://s3.us-east-2.amazonaws.com/cf-templates-1qvjgmx78h22d-us-east-2/ec2_cft.json'
     print (bucketname)
     print (cft_filename)
     print (s3_region_name)
@@ -36,44 +35,26 @@ def lambda_handler(event, context):
             'UsePreviousValue': False
         }
     ])
-    # TODO implement
     print (response)
     print (event)
-    #time.sleep(60)
     sns_notification(event, context)
-    #s3upload(event, context)
 
 def sns_notification(event, context):
     Desc_stack = client.describe_stacks(StackName=stackname)
     getstack = Desc_stack['Stacks']
     status = getstack[0]['StackStatus']
     stackid = getstack[0]['StackId']
+    subject = 'SUDB1 - Cloudformation Stack Creation Notifciation - ' + stackname
     if status == 'CREATE_COMPLETE':
-        msg = 'The Stack ' +  stackname + ' has been created'
-        outMsg = 'Cloud Formation Stack has been created successfully \n ' + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
+        outMsg = 'Hello Sqilup Team, \n \n Cloud Formation Stack has been created successfully \n\n\n ' + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
     elif status == 'CREATE_IN_PROGRESS':
-        msg = 'The Stack '+  stackname + ' creation is in progress'
-        outMsg = 'Cloud Formation Stack creation is in progress \n' + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
+        outMsg = 'Hello Sqilup Team, \n \n Cloud Formation Stack creation is in progress \n\n\n' + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
     elif status == 'CREATE_FAILED':
-        msg = 'The stack ' + stackname + ' creation Failed'
-        outMsg = 'Cloud Formation Stack creation has been Failed \n'  + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
+        outMsg = 'Hello Sqilup Team, \n \n Cloud Formation Stack creation has been Failed \n\n\n'  + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
     else:
-        msg = 'The stack ' + stackname + ' is in other status. please check'
-        outMsg = 'Cloud Formation Stack is in other status than expected \n'  + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
-    FinalMsg = outMsg + '\n' + msg
-    #outMsg = 'Cloud Formation Stack has been created successfully'
+        outMsg = 'Hello Sqilup Team, \n \n Cloud Formation Stack is in other status than expected \n\n\n'  + '\t Stack id : ' + stackid + '\n\t Stack Name:' + stackname + '\n\t Stack Status:' + status
+    FinalMsg = outMsg + '\n\n\nThanks,\nSqilup Data Batch 1 - Trans team'
     arn = 'arn:aws:sns:us-east-2:015885713785:SUDB1_SEND_NTFN'
-    sns_response = snsHandler.publish(TopicArn=arn,Message=FinalMsg,Subject='SUDB1_SEND_NTFN - Create the cloudformation Stack')
+    sns_response = snsHandler.publish(TopicArn=arn,Message=FinalMsg,Subject=subject)
     print (sns_response)
-    
-#def s3upload(event, contex):
- #   evnt = event
-  #  dict_evnt = evnt['Records']
-   # bucketname = dict_evnt[0]['s3']['bucket']['name']
-    #cft_filename = dict_evnt[0]['s3']['Object']['key']
-    #response = s3Handler.list_objects(
-    #Bucket='cf-templates-1qvjgmx78h22d-us-east-2')
-    #print (evnt)
-    #print (bucketname)
-    #print (cft_filename)
     
