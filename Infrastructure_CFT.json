@@ -7,7 +7,16 @@
       "Description": "Default permissions for the bucket",
       "AllowedValues": [ "Private", "PublicRead", "PublicReadWrite", "AuthenticatedRead", "LogDeliveryWrite", "BucketOwnerRead", "BucketOwnerFullControl" ],
       "Default": "Private"
-    }
+    },
+    
+          "RegionName": {
+            "Description" : "Name of an existing Region vaialbles",
+            "Type": "String",
+            "AllowedValues": [ "us-east-1", "eu-west-1", "us-east-2", "eu-west-2" ],
+            "Default" : "us-east-1"
+   }
+    
+    
   },
   "Resources": {
     
@@ -115,7 +124,7 @@
     
     
     
-  "Topic-Source-SU": {
+  "TopicSourceSU": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
         "TopicName" : "eu-dev-sqilupdb1-sns-topic-src-su",
@@ -131,7 +140,7 @@
       "DependsOn": [ "Lambda" ]
   },
   
-  "Topic-Source-FA": {
+  "TopicSourceFA": {
       "Type": "AWS::SNS::Topic",
       "Properties": {
         "TopicName" : "eu-dev-sqilupdb1-sns-topic-src-fa",
@@ -148,7 +157,7 @@
   },
   
   
-      "Topic-Transform-SU": {
+      "TopicTransformSU": {
         "Type": "AWS::SNS::Topic",
         "Properties": {
           "TopicName" : "eu-dev-sqilupdb1-sns-topic-trf-su",
@@ -164,7 +173,7 @@
         "DependsOn": [ "Lambda" ]
   },
     
-          "Topic-Transform-FA": {
+          "TopicTransformFA": {
         "Type": "AWS::SNS::Topic",
         "Properties": {
           "TopicName" : "eu-dev-sqilupdb1-sns-topic-trf-fa",
@@ -181,7 +190,7 @@
   },
     
     
-              "Topic-DQ-SU": {
+              "TopicDQSU": {
         "Type": "AWS::SNS::Topic",
         "Properties": {
           "TopicName" : "eu-dev-sqilupdb1-sns-topic-dq-su",
@@ -198,7 +207,7 @@
   },
   
   
-                "Topic-DQ-FA": {
+                "TopicDQFA": {
         "Type": "AWS::SNS::Topic",
         "Properties": {
           "TopicName" : "eu-dev-sqilupdb1-sns-topic-dq-fa",
@@ -284,27 +293,27 @@
         "BucketNameDq": {
           "Value": { "Ref": "S3BucketDq" }
     }    ,
-        "Topic-Source-SU": {
-          "Value": { "Ref": "Topic-Source-SU" }
+        "TopicSourceSU": {
+          "Value": { "Ref": "TopicSourceSU" }
     },
      
-        "Topic-Source-FA": {
-          "Value": { "Ref": "Topic-Source-FA" }
+        "TopicSourceFA": {
+          "Value": { "Ref": "TopicSourceFA" }
     } ,
-        "Topic-Transform-SU": {
-          "Value": { "Ref": "Topic-Transform-SU" }
+        "TopicTransformSU": {
+          "Value": { "Ref": "TopicTransformSU" }
     },
      
-        "Topic-Transform-FA": {
-          "Value": { "Ref": "Topic-Transform-FA" }
+        "TopicTransformFA": {
+          "Value": { "Ref": "TopicTransformFA" }
     }
      ,
-        "Topic-DQ-SU": {
-          "Value": { "Ref": "Topic-DQ-SU" }
+        "TopicDQSU": {
+          "Value": { "Ref": "TopicDQSU" }
     },
      
-        "Topic-DQ-FA": {
-          "Value": { "Ref": "Topic-DQ-FA" }
+        "TopicDQFA": {
+          "Value": { "Ref": "TopicDQFA" }
     },
     
      
