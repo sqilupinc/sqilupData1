@@ -59,6 +59,6 @@ def snsNotification(event, context, s3Dict):
     json_data = json.dumps(dict_data,indent = 4)
     print (json_data)
     outMsg = (json_data)
-    arn = 'arn:aws:sns:us-east-1:420345549088:SUDB1_SNS_NFN_TPC'
+    arn = 'arn:aws:sns:us-east-1:645594188479:eu-dev-sqilupdb1-sns-topic-src-su'
     sns_response=snsHandler.publish(TopicArn=arn,Message=outMsg,Subject='Sourcing')
     print (sns_response)
